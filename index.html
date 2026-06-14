@@ -98,29 +98,39 @@
     /* ── ANIMATED PHOTO FRAME ── */
     .photo-frame-wrap {
       position: absolute;
-      /* Positioned via JS positionPhotoFrame() based on rendered image size */
       width: 15%;
       aspect-ratio: 3/4;
       pointer-events: none;
     }
 
-    /* Spinning gradient border ring */
+    /* Pulsing glow border */
     .photo-frame-wrap::before {
       content: '';
       position: absolute;
-      inset: -4px;
-      border-radius: 10px;
-      background: conic-gradient(
-        from 0deg,
-        #f4a48b,
-        #f5c842,
-        #e8836a,
-        #f472b6,
-        #a78bfa,
-        #f4a48b
-      );
-      animation: spin-border 2.5s linear infinite;
+      inset: -5px;
+      border-radius: 12px;
+      background: var(--white);
+      box-shadow:
+        0 0 0 3px var(--peach),
+        0 0 18px rgba(244,164,139,0.5),
+        0 0 36px rgba(244,164,139,0.2);
+      animation: glow-pulse 2.8s ease-in-out infinite;
       z-index: 2;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% {
+        box-shadow:
+          0 0 0 3px var(--peach),
+          0 0 18px rgba(244,164,139,0.45),
+          0 0 36px rgba(244,164,139,0.15);
+      }
+      50% {
+        box-shadow:
+          0 0 0 4px var(--peach-dark),
+          0 0 28px rgba(232,131,106,0.65),
+          0 0 52px rgba(232,131,106,0.28);
+      }
     }
 
     /* Mask the center so only the border shows */
@@ -169,10 +179,6 @@
     .dot-red   { background: #ff5f57; animation: dot-pulse 2s 0s infinite; }
     .dot-yellow{ background: #febc2e; animation: dot-pulse 2s 0.3s infinite; }
     .dot-green { background: #28c840; animation: dot-pulse 2s 0.6s infinite; }
-
-    @keyframes spin-border {
-      to { transform: rotate(360deg); }
-    }
 
     @keyframes dot-pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
@@ -868,10 +874,9 @@
     </ul>
   </nav>
 
-  <!-- HERO — your Canva design -->
+  <!-- HERO -->
   <section id="hero">
     <img src="canva-hero.png" alt="Jyo Thi Portfolio Hero" class="hero-canva" />
-    <!-- Animated photo frame with your live photo -->
     <div class="photo-frame-wrap">
       <div class="photo-frame-bar">
         <div class="dot dot-red"></div>
@@ -1144,8 +1149,6 @@
     );
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    // Place photo frame where the photo was in the Canva design (1366x768)
-    // Original photo element: left=894, top=205, width=288, height=338
     function positionPhotoFrame() {
       const img   = document.querySelector('.hero-canva');
       const frame = document.querySelector('.photo-frame-wrap');
