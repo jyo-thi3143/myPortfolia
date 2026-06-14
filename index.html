@@ -95,6 +95,90 @@
       right: 6%;
     }
 
+    /* ── ANIMATED PHOTO FRAME ── */
+    .photo-frame-wrap {
+      position: absolute;
+      /* Positioned via JS positionPhotoFrame() based on rendered image size */
+      width: 15%;
+      aspect-ratio: 3/4;
+      pointer-events: none;
+    }
+
+    /* Spinning gradient border ring */
+    .photo-frame-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 10px;
+      background: conic-gradient(
+        from 0deg,
+        #f4a48b,
+        #f5c842,
+        #e8836a,
+        #f472b6,
+        #a78bfa,
+        #f4a48b
+      );
+      animation: spin-border 2.5s linear infinite;
+      z-index: 2;
+    }
+
+    /* Mask the center so only the border shows */
+    .photo-frame-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 8px;
+      background: transparent;
+      z-index: 3;
+      box-shadow: inset 0 0 0 3px #f4a48b;
+    }
+
+    .photo-frame-img {
+      position: absolute;
+      inset: 3px;
+      width: calc(100% - 6px);
+      height: calc(100% - 6px);
+      object-fit: cover;
+      border-radius: 8px;
+      z-index: 4;
+    }
+
+    /* Browser-window dots bar above the photo */
+    .photo-frame-bar {
+      position: absolute;
+      top: -22px;
+      left: 0; right: 0;
+      height: 22px;
+      background: #f9c0d0;
+      border-radius: 8px 8px 0 0;
+      display: flex;
+      align-items: center;
+      padding-left: 8px;
+      gap: 5px;
+      z-index: 5;
+      border: 2px solid rgba(92,61,46,0.15);
+      border-bottom: none;
+    }
+
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+
+    .dot-red   { background: #ff5f57; animation: dot-pulse 2s 0s infinite; }
+    .dot-yellow{ background: #febc2e; animation: dot-pulse 2s 0.3s infinite; }
+    .dot-green { background: #28c840; animation: dot-pulse 2s 0.6s infinite; }
+
+    @keyframes spin-border {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes dot-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.85); }
+    }
+
     .chat-btn {
       display: inline-flex;
       align-items: center;
@@ -787,6 +871,15 @@
   <!-- HERO — your Canva design -->
   <section id="hero">
     <img src="canva-hero.png" alt="Jyo Thi Portfolio Hero" class="hero-canva" />
+    <!-- Animated photo frame with your live photo -->
+    <div class="photo-frame-wrap">
+      <div class="photo-frame-bar">
+        <div class="dot dot-red"></div>
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-green"></div>
+      </div>
+      <img src="photo.jpg" alt="Jyo Thi" class="photo-frame-img" />
+    </div>
     <div class="hero-overlay">
       <a href="#contact" class="chat-btn">💬 LET'S CHAT!</a>
     </div>
@@ -1050,6 +1143,25 @@
       { threshold: 0.08 }
     );
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Place photo frame where the photo was in the Canva design (1366x768)
+    // Original photo element: left=894, top=205, width=288, height=338
+    function positionPhotoFrame() {
+      const img   = document.querySelector('.hero-canva');
+      const frame = document.querySelector('.photo-frame-wrap');
+      if (!img || !frame) return;
+      const scale  = img.offsetWidth / 1366;
+      const imgTop = img.offsetTop;
+      frame.style.left  = (894 * scale) + 'px';
+      frame.style.top   = (205 * scale + imgTop) + 'px';
+      frame.style.width = (288 * scale) + 'px';
+      frame.style.right = 'auto';
+    }
+
+    const heroImg = document.querySelector('.hero-canva');
+    if (heroImg.complete) positionPhotoFrame();
+    else heroImg.addEventListener('load', positionPhotoFrame);
+    window.addEventListener('resize', positionPhotoFrame);
   </script>
 
 </body>
