@@ -77,189 +77,92 @@
     #hero {
       position: relative;
       width: 100%;
-      min-height: calc(100vh - 64px);
-      margin-top: 64px;
-      background: linear-gradient(135deg, #f4a48b 0%, #f8cfc0 50%, #fde8de 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5vw;
-      padding: 4rem 6vw;
-      overflow: hidden;
+      padding-top: 64px;
     }
 
-    /* Scattered sticker emojis */
-    .sticker {
+    .hero-canva {
+      width: 100%;
+      display: block;
+      max-height: 90vh;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* Overlay the LET'S CHAT button on the canva image */
+    .hero-overlay {
       position: absolute;
-      font-size: 2.2rem;
-      user-select: none;
-      pointer-events: none;
-      animation: float 4s ease-in-out infinite;
-      filter: drop-shadow(2px 3px 4px rgba(92,61,46,0.18));
-    }
-    .s1  { top: 8%;  left: 4%;   font-size: 2.8rem; animation-delay: 0s;    animation-duration: 5s; }
-    .s2  { top: 15%; left: 18%;  font-size: 2rem;   animation-delay: 0.7s;  animation-duration: 4.5s; }
-    .s3  { top: 6%;  left: 45%;  font-size: 1.8rem; animation-delay: 1.2s;  animation-duration: 5.5s; }
-    .s4  { top: 70%; left: 3%;   font-size: 2.4rem; animation-delay: 0.4s;  animation-duration: 4.2s; }
-    .s5  { top: 80%; left: 22%;  font-size: 2rem;   animation-delay: 1.8s;  animation-duration: 5s; }
-    .s6  { top: 5%;  right: 4%;  font-size: 3rem;   animation-delay: 0.2s;  animation-duration: 4.8s; }
-    .s7  { top: 55%; right: 5%;  font-size: 2rem;   animation-delay: 1s;    animation-duration: 5.2s; }
-    .s8  { top: 82%; right: 8%;  font-size: 1.8rem; animation-delay: 1.5s;  animation-duration: 4s; }
-    .s9  { top: 30%; left: 7%;   font-size: 1.6rem; animation-delay: 0.9s;  animation-duration: 5.8s; }
-    .s10 { top: 25%; right: 20%; font-size: 1.5rem; animation-delay: 2s;    animation-duration: 4.3s; }
-    .s11 { top: 88%; left: 52%;  font-size: 2rem;   animation-delay: 0.6s;  animation-duration: 5.1s; }
-    .s12 { top: 45%; left: 1%;   font-size: 1.7rem; animation-delay: 1.3s;  animation-duration: 4.6s; }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(-3deg); }
-      50%       { transform: translateY(-12px) rotate(3deg); }
-    }
-
-    /* Hero left: text */
-    .hero-content {
-      position: relative;
-      z-index: 10;
-      flex: 1;
-      max-width: 520px;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      background: var(--brown);
-      color: var(--white);
-      font-family: 'Fredoka', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      padding: 0.35rem 1rem;
-      border-radius: 100px;
-      width: fit-content;
-    }
-
-    .hero-bubble {
-      background: var(--white);
-      color: var(--brown);
-      font-family: 'Fredoka', sans-serif;
-      font-size: 1.7rem;
-      font-weight: 600;
-      padding: 0.6rem 1.5rem;
-      border-radius: 100px;
-      width: fit-content;
-      box-shadow: 4px 4px 0 var(--peach-dark);
-      position: relative;
-    }
-    .hero-bubble::after {
-      content: '';
-      position: absolute;
-      bottom: -12px;
-      left: 2rem;
-      width: 0; height: 0;
-      border-left: 14px solid transparent;
-      border-right: 0px solid transparent;
-      border-top: 14px solid var(--white);
-    }
-
-    .hero-name {
-      font-family: 'Fredoka', sans-serif;
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      font-weight: 700;
-      color: var(--brown);
-      line-height: 1;
-      text-shadow: 3px 3px 0 rgba(92,61,46,0.12);
-      margin-top: 0.5rem;
-    }
-
-    .hero-tagline {
-      font-family: 'Nunito', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--peach-dark);
-      letter-spacing: 0.02em;
-    }
-
-    .hero-sub {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--muted);
+      bottom: 8%;
+      right: 6%;
     }
 
     /* ── ANIMATED PHOTO FRAME ── */
     .photo-frame-wrap {
-      position: relative;
-      z-index: 10;
-      width: clamp(200px, 22vw, 320px);
+      position: absolute;
+      /* Positioned via JS positionPhotoFrame() based on rendered image size */
+      width: 15%;
       aspect-ratio: 3/4;
-      flex-shrink: 0;
-      animation: gentle-float 5s ease-in-out infinite;
+      pointer-events: none;
     }
 
-    @keyframes gentle-float {
-      0%, 100% { transform: translateY(0px); }
-      50%       { transform: translateY(-10px); }
-    }
-
-    /* Soft pulsing glow border */
+    /* Spinning gradient border ring */
     .photo-frame-wrap::before {
       content: '';
       position: absolute;
-      inset: -5px;
-      border-radius: 14px;
-      background: var(--white);
-      box-shadow:
-        0 0 0 3px var(--peach),
-        0 0 20px rgba(244,164,139,0.5),
-        0 0 40px rgba(244,164,139,0.2);
-      animation: glow-pulse 2.8s ease-in-out infinite;
-      z-index: 1;
+      inset: -4px;
+      border-radius: 10px;
+      background: conic-gradient(
+        from 0deg,
+        #f4a48b,
+        #f5c842,
+        #e8836a,
+        #f472b6,
+        #a78bfa,
+        #f4a48b
+      );
+      animation: spin-border 2.5s linear infinite;
+      z-index: 2;
     }
 
-    @keyframes glow-pulse {
-      0%, 100% {
-        box-shadow:
-          0 0 0 3px var(--peach),
-          0 0 18px rgba(244,164,139,0.45),
-          0 0 36px rgba(244,164,139,0.15);
-      }
-      50% {
-        box-shadow:
-          0 0 0 4px var(--peach-dark),
-          0 0 28px rgba(232,131,106,0.65),
-          0 0 52px rgba(232,131,106,0.28);
-      }
+    /* Mask the center so only the border shows */
+    .photo-frame-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 8px;
+      background: transparent;
+      z-index: 3;
+      box-shadow: inset 0 0 0 3px #f4a48b;
     }
 
     .photo-frame-img {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      inset: 3px;
+      width: calc(100% - 6px);
+      height: calc(100% - 6px);
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: 8px;
       z-index: 4;
     }
 
     /* Browser-window dots bar above the photo */
     .photo-frame-bar {
       position: absolute;
-      top: -26px;
-      left: -5px; right: -5px;
-      height: 26px;
+      top: -22px;
+      left: 0; right: 0;
+      height: 22px;
       background: #f9c0d0;
-      border-radius: 10px 10px 0 0;
+      border-radius: 8px 8px 0 0;
       display: flex;
       align-items: center;
-      padding-left: 10px;
-      gap: 6px;
+      padding-left: 8px;
+      gap: 5px;
       z-index: 5;
-      border: 3px solid rgba(92,61,46,0.12);
+      border: 2px solid rgba(92,61,46,0.15);
       border-bottom: none;
     }
 
     .dot {
-      width: 9px; height: 9px;
+      width: 8px; height: 8px;
       border-radius: 50%;
     }
 
@@ -267,14 +170,13 @@
     .dot-yellow{ background: #febc2e; animation: dot-pulse 2s 0.3s infinite; }
     .dot-green { background: #28c840; animation: dot-pulse 2s 0.6s infinite; }
 
+    @keyframes spin-border {
+      to { transform: rotate(360deg); }
+    }
+
     @keyframes dot-pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.6; transform: scale(0.85); }
-    }
-
-    @media (max-width: 700px) {
-      #hero { flex-direction: column; padding: 3rem 6vw; gap: 2.5rem; min-height: auto; }
-      .photo-frame-wrap { width: clamp(160px, 55vw, 240px); }
     }
 
     .chat-btn {
@@ -966,33 +868,10 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO — your Canva design -->
   <section id="hero">
-    <!-- Scattered stickers -->
-    <span class="sticker s1">⌨️</span>
-    <span class="sticker s2">🧋</span>
-    <span class="sticker s3">🖱️</span>
-    <span class="sticker s4">🌐</span>
-    <span class="sticker s5">⚛️</span>
-    <span class="sticker s6">👩‍💻</span>
-    <span class="sticker s7">✨</span>
-    <span class="sticker s8">💡</span>
-    <span class="sticker s9">🎯</span>
-    <span class="sticker s10">📱</span>
-    <span class="sticker s11">🚀</span>
-    <span class="sticker s12">💻</span>
-
-    <!-- Left: text -->
-    <div class="hero-content">
-      <div class="hero-badge">PORTFOLIO</div>
-      <div class="hero-bubble">Hi! I am Jyo 👋</div>
-      <h1 class="hero-name">Jyo Thi</h1>
-      <p class="hero-tagline">Full-Stack Developer · CS Student</p>
-      <p class="hero-sub">Brooklyn College, CUNY · Dec 2026</p>
-      <a href="#contact" class="chat-btn">💬 LET'S CHAT!</a>
-    </div>
-
-    <!-- Right: photo with browser frame -->
+    <img src="canva-hero.png" alt="Jyo Thi Portfolio Hero" class="hero-canva" />
+    <!-- Animated photo frame with your live photo -->
     <div class="photo-frame-wrap">
       <div class="photo-frame-bar">
         <div class="dot dot-red"></div>
@@ -1000,6 +879,9 @@
         <div class="dot dot-green"></div>
       </div>
       <img src="photo.jpg" alt="Jyo Thi" class="photo-frame-img" />
+    </div>
+    <div class="hero-overlay">
+      <a href="#contact" class="chat-btn">💬 LET'S CHAT!</a>
     </div>
   </section>
 
@@ -1262,6 +1144,24 @@
     );
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
+    // Place photo frame where the photo was in the Canva design (1366x768)
+    // Original photo element: left=894, top=205, width=288, height=338
+    function positionPhotoFrame() {
+      const img   = document.querySelector('.hero-canva');
+      const frame = document.querySelector('.photo-frame-wrap');
+      if (!img || !frame) return;
+      const scale  = img.offsetWidth / 1366;
+      const imgTop = img.offsetTop;
+      frame.style.left  = (894 * scale) + 'px';
+      frame.style.top   = (205 * scale + imgTop) + 'px';
+      frame.style.width = (288 * scale) + 'px';
+      frame.style.right = 'auto';
+    }
+
+    const heroImg = document.querySelector('.hero-canva');
+    if (heroImg.complete) positionPhotoFrame();
+    else heroImg.addEventListener('load', positionPhotoFrame);
+    window.addEventListener('resize', positionPhotoFrame);
   </script>
 
 </body>
